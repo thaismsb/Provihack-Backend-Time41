@@ -5,7 +5,8 @@ const pool = new Pool({
     host: 'localhost',
     database: 'locais_acessiveis',
     password: 'Know-how',
-    port: 5432
+    port: 5432,
+    ssl: { rejectUnauthorized: false }
 });
 
 const query = (text, param) => {

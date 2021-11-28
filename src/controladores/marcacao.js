@@ -79,30 +79,26 @@ const aprovarLugar = async(req,res) =>{
     const { id } = req.params;
     const { aprovacao } = req.body;
 
+    if (aprovacao !== true || aprovacao !== false) {
+        return res.status(400).json('Nesse campo só pode ser digitado true ou false');
+    }
+
     try {
-        const marcacoes = await conexao.query('select * from marcacao_usuario where id = $1', [id]);
+        const lmarcado = await conexao.query('select * from marcacao_usuario where id = $1', [id]);
 
-        if (marcacoes.rowCount === 0) {
-            return res.status(404).json('Marcação não encontrada!');
+        if (lmarcado.rowCount === 0) {
+            return res.status(404).json('Marcação não encontada');
         }
-
-         if (aprovacao !== false || aprovacao !== true) {
-        return res.status(400).json('Você só pode digitar true ou false.');
-    }
-
-    if (aprovacao === false) {
-        return res.status(400).json('A marcação não foi aprovada.');
-    }
 
         const query = `update marcacao_usuario set aprovacao = $1 where id = $2`;
 
-        const aprovacaoAtualizada = await conexao.query(query, [aprovacao, id]);
+        const marcacaoAtualizada = await conexao.query(query, [aprovacao, id]);
 
-        if (aprovacaoAtualizada.rowCount === 0) {
+        if (marcacaoAtualizada.rowCount === 0) {
             return res.status(400).json('Não foi possível aprovar a marcação.');
         }
 
-        return res.status(200).json('A marcação foi aprovada!');
+        return res.status(200).json('A marcação foi aprovada com sucesso.');
     } catch (error) {
         return res.status(400).json(error.message);
     }

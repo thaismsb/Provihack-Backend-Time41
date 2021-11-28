@@ -79,20 +79,20 @@ const aprovarLugar = async(req,res) =>{
     const { id } = req.params;
     const { aprovacao } = req.body;
 
- if (aprovacao !== false || aprovacao !== true) {
-        return res.status(400).json('Você só pode digitar true ou false.');
-    }
-
-    if (aprovacao === false) {
-        return res.status(400).json('A marcação não foi aprovada.');
-    }
-
     try {
         const marcacoes = await conexao.query('select * from marcacao_usuario where id = $1', [id]);
 
         if (marcacoes.rowCount === 0) {
             return res.status(404).json('Marcação não encontrada!');
         }
+
+         if (aprovacao !== false || aprovacao !== true) {
+        return res.status(400).json('Você só pode digitar true ou false.');
+    }
+
+    if (aprovacao === false) {
+        return res.status(400).json('A marcação não foi aprovada.');
+    }
 
         const query = `update marcacao_usuario set aprovacao = $1 where id = $2`;
 

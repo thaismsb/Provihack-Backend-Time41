@@ -56,10 +56,27 @@ const listarComentarios = async(req,res) =>{
     }
 }
 
+const listarLugaresCategoria = async(req,res) =>{
+
+        const { categoria }= req.params;
+    try {
+        const categ = await conexao.query('select logradouro from marcacao where categoria = $1', [categoria]);
+
+        if (categ.rowCount === 0) {
+            return res.status(404).json('Lugares com essa categoria não foram encontrados.');
+        }
+
+        return res.status(200).json(categ.rows);
+    } catch (error) {
+        return res.status(400).json(error.message);
+    }
+}
+
 
 
 module.exports ={
     marcacaoLugar,
     listarLugaresMarcados,
-    listarComentarios
+    listarComentarios,
+    listarLugaresCategoria
 }

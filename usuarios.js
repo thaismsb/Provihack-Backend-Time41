@@ -1,4 +1,6 @@
-const conexao = require('../conexao');
+//implementação futura quando houver cadastro de usuários
+
+const conexao = require('./src/conexao');
 
 const listarUsuarios = async (req,res) =>{
        

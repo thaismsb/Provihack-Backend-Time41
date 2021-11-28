@@ -79,7 +79,7 @@ const aprovarLugar = async(req,res) =>{
     const { id } = req.params;
     const { aprovacao } = req.body;
 
- if (aprovacao != false || aprovacao != true) {
+ if (aprovacao !== false || aprovacao !== true) {
         return res.status(400).json('Você só pode digitar "true" ou "false".');
     }
 

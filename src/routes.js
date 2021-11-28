@@ -15,5 +15,7 @@ routes.get('/comentarios/:logradouro', marcacao.listarComentarios);
 
 routes.get('/lugares/:categoria', marcacao.listarLugaresCategoria);
 
+routes.put('/aprovar/:id', marcacao.aprovarLugar);
+
 
 module.exports = routes;

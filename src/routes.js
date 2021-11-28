@@ -4,6 +4,10 @@ const marcacao = require('./controladores/marcacao');
 
 const routes = express();
 
+routes.get('/', (req, res) => {
+    return res.send('OK');
+})
+
 routes.post('/usuarios', usuarios.identificarUsuario);
 
 routes.get('/usuarios', usuarios.listarUsuarios);
